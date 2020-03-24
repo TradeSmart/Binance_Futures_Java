@@ -19,7 +19,7 @@ class ApiSignature {
     void createSignature(String accessKey, String secretKey, UrlParamsBuilder builder) {
 
         if (accessKey == null || "".equals(accessKey) || secretKey == null || "".equals(secretKey)) {
-            throw new BinanceApiException(BinanceApiException.KEY_MISSING, "API key and secret key are required");
+            throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR, "API key and secret key are required");
         }
 
         builder.putToUrl("recvWindow", Long.toString(BinanceApiConstants.DEFAULT_RECEIVING_WINDOW))

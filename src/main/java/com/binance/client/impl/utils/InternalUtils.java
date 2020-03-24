@@ -34,7 +34,7 @@ public abstract class InternalUtils {
     try {
       Thread.sleep(n);
     } catch (InterruptedException e) {
-      throw new BinanceApiException(BinanceApiException.SYS_ERROR, "Error when sleep", e);
+      throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR, "Error when sleep", e);
     }
   }
 }

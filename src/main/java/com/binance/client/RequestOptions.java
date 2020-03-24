@@ -28,7 +28,7 @@ public class RequestOptions {
             URL u = new URL(url);
             this.url = u.toString();
         } catch (Exception e) {
-            throw new BinanceApiException(BinanceApiException.INPUT_ERROR, "The URI is incorrect: " + e.getMessage());
+            throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR, "The URI is incorrect: " + e.getMessage());
         }
         this.url = url;
     }

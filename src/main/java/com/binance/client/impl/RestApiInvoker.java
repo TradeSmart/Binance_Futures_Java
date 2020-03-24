@@ -24,9 +24,9 @@ abstract class RestApiInvoker {
                     String err_code = json.getStringOrDefault("code", "");
                     String err_msg = json.getStringOrDefault("msg", "");
                     if ("".equals(err_code)) {
-                        throw new BinanceApiException(BinanceApiException.EXEC_ERROR, "[Executing] " + err_msg);
+                        throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR, "[Executing] " + err_msg);
                     } else {
-                        throw new BinanceApiException(BinanceApiException.EXEC_ERROR,
+                        throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
                                 "[Executing] " + err_code + ": " + err_msg);
                     }
                 }
@@ -35,7 +35,7 @@ abstract class RestApiInvoker {
                 int code = json.getInteger("code");
                 if (code != 200) {
                     String message = json.getStringOrDefault("msg", "");
-                    throw new BinanceApiException(BinanceApiException.EXEC_ERROR,
+                    throw new BinanceApiException(code,
                             "[Executing] " + code + ": " + message);
                 }
             }
@@ -57,7 +57,7 @@ abstract class RestApiInvoker {
                 str = response.body().string();
                 response.close();
             } else {
-                throw new BinanceApiException(BinanceApiException.ENV_ERROR,
+                throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
                         "[Invoking] Cannot get the response from server");
             }
             log.debug("Response =====> " + str);
@@ -67,7 +67,7 @@ abstract class RestApiInvoker {
         } catch (BinanceApiException e) {
             throw e;
         } catch (Exception e) {
-            throw new BinanceApiException(BinanceApiException.ENV_ERROR,
+            throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
                     "[Invoking] Unexpected error: " + e.getMessage());
         }
     }

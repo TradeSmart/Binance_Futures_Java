@@ -29,7 +29,7 @@ class InputChecker {
 
   <T> InputChecker shouldNotNull(T value, String name) {
     if (value == null) {
-      throw new BinanceApiException(BinanceApiException.INPUT_ERROR,
+      throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
           "[Input] " + name + " should not be null");
     }
     return checkerInst;
@@ -37,7 +37,7 @@ class InputChecker {
 
   <T> InputChecker shouldNull(T value, String name) {
     if (value != null) {
-      throw new BinanceApiException(BinanceApiException.INPUT_ERROR,
+      throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
           "[Input] " + name + " should be null");
     }
     return checkerInst;
@@ -45,11 +45,11 @@ class InputChecker {
 
   InputChecker checkSymbol(String symbol) {
     if (symbol == null || "".equals(symbol)) {
-      throw new BinanceApiException(BinanceApiException.INPUT_ERROR,
+      throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
           "[Input] Symbol is mandatory");
     }
     if (isSpecialChar(symbol)) {
-      throw new BinanceApiException(BinanceApiException.INPUT_ERROR,
+      throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
           "[Input] " + symbol + " is invalid symbol");
     }
     return checkerInst;
@@ -57,11 +57,11 @@ class InputChecker {
 
   InputChecker checkCurrency(String currency) {
     if (currency == null || "".equals(currency)) {
-      throw new BinanceApiException(BinanceApiException.INPUT_ERROR,
+      throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
           "[Input] Currency is mandatory");
     }
     if (isSpecialChar(currency)) {
-      throw new BinanceApiException(BinanceApiException.INPUT_ERROR,
+      throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
           "[Input] " + currency + " is invalid currency");
     }
     return checkerInst;
@@ -69,7 +69,7 @@ class InputChecker {
 
   InputChecker checkETF(String symbol) {
     if (!"hb10".equals(symbol)) {
-      throw new BinanceApiException(BinanceApiException.INPUT_ERROR,
+      throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
           "currently only support hb10 :-)");
     }
     return checkerInst;
@@ -77,7 +77,7 @@ class InputChecker {
 
   private InputChecker checkRange(int size, int min, int max, String name) {
     if (!(min <= size && size <= max)) {
-      throw new BinanceApiException(BinanceApiException.INPUT_ERROR,
+      throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
           "[Input] " + name + " is out of bound. " + size + " is not in [" + min + "," + max + "]");
     }
     return checkerInst;
@@ -85,7 +85,7 @@ class InputChecker {
 
   InputChecker checkSymbolList(List<String> symbols) {
     if (symbols == null || symbols.size() == 0) {
-      throw new BinanceApiException(BinanceApiException.INPUT_ERROR, "[Input] Symbol is mandatory");
+      throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR, "[Input] Symbol is mandatory");
     }
     for (String symbol : symbols) {
       checkSymbol(symbol);
@@ -102,7 +102,7 @@ class InputChecker {
 
   InputChecker greaterOrEqual(Integer value, int base, String name) {
     if (value != null && value < base) {
-      throw new BinanceApiException(BinanceApiException.INPUT_ERROR,
+      throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
           "[Input] " + name + " should be greater than " + base);
     }
     return checkerInst;
@@ -111,10 +111,10 @@ class InputChecker {
   <T> InputChecker checkList(List<T> list, int min, int max, String name) {
     if (list != null) {
       if (list.size() > max) {
-        throw new BinanceApiException(BinanceApiException.INPUT_ERROR,
+        throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
             "[Input] " + name + " is out of bound, the max size is " + max);
       } else if (list.size() < min) {
-        throw new BinanceApiException(BinanceApiException.INPUT_ERROR,
+        throw new BinanceApiException(BinanceApiException.RUNTIME_ERROR,
             "[Input] " + name + " should contain " + min + " item(s) at least");
       }
     }
