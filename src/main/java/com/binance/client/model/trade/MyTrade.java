@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 
 public class MyTrade {
 
+    private Long id;
+
     private Boolean isBuyer;
 
     private BigDecimal commission;
@@ -32,6 +34,14 @@ public class MyTrade {
     private String symbol;
 
     private Long time;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Boolean getIsBuyer() {
         return isBuyer;

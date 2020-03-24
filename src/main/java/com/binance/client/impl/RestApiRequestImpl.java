@@ -888,6 +888,7 @@ class RestApiRequestImpl {
             JsonWrapperArray dataArray = jsonWrapper.getJsonArray("data");
             dataArray.forEach((item) -> {
                 MyTrade element = new MyTrade();
+                element.setId(item.getLong("id"));
                 element.setIsBuyer(item.getBoolean("buyer"));
                 element.setCommission(item.getBigDecimal("commission"));
                 element.setCommissionAsset(item.getString("commissionAsset"));
