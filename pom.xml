@@ -12,6 +12,14 @@
         <fastjson.version>1.2.47</fastjson.version>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>tuned-artifacts--forked-third-party-libraries</id>
+            <name>tuned-artifacts--forked-third-party-libraries</name>
+            <url>${env.CODEARTIFACT_REPOSITORY_URL}</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
