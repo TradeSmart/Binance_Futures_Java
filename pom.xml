@@ -4,7 +4,7 @@
 
     <groupId>com.binance.sdk</groupId>
     <artifactId>binance-futures-client</artifactId>
-    <version>1.0.8-SNAPSHOT+TUNED</version>
+    <version>1.0.9-SNAPSHOT+TUNED</version>
 
     <properties>
         <java.version>1.8</java.version>
