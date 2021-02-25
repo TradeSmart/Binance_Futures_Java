@@ -24,6 +24,7 @@ import com.binance.client.model.user.BalanceUpdate;
 import com.binance.client.model.user.OrderUpdate;
 import com.binance.client.model.user.PositionUpdate;
 import com.binance.client.model.user.UserDataUpdateEvent;
+import com.binance.client.exception.BinanceApiException;
 
 class WebsocketRequestImpl {
 
@@ -475,49 +476,54 @@ class WebsocketRequestImpl {
                 });
                 accountUpdate.setBalances(balanceList);
 
-                List<PositionUpdate> positionList = new LinkedList<>();
-                JsonWrapperArray datalist = jsonWrapper.getJsonObject("a").getJsonArray("B");
-                datalist.forEach(item -> {
-                    PositionUpdate position = new PositionUpdate();
-                    position.setSymbol(item.getString("s"));
-                    position.setAmount(item.getBigDecimal("pa"));
-                    position.setEntryPrice(item.getBigDecimal("ep"));
-                    position.setPreFee(item.getBigDecimal("cr"));
-                    position.setUnrealizedPnl(item.getBigDecimal("up"));
-                    positionList.add(position);
-                });
-                accountUpdate.setPositions(positionList);
+//                List<PositionUpdate> positionList = new LinkedList<>();
+//                JsonWrapperArray datalist = jsonWrapper.getJsonObject("a").getJsonArray("B");
+//                datalist.forEach(item -> {
+//                    PositionUpdate position = new PositionUpdate();
+//                    position.setSymbol(item.getString("s"));
+//                    position.setAmount(item.getBigDecimal("pa"));
+//                    position.setEntryPrice(item.getBigDecimal("ep"));
+//                    position.setPreFee(item.getBigDecimal("cr"));
+//                    position.setUnrealizedPnl(item.getBigDecimal("up"));
+//                    positionList.add(position);
+//                });
+//                accountUpdate.setPositions(positionList);
 
                 result.setAccountUpdate(accountUpdate); 
 
             } else if(jsonWrapper.getString("e").equals("ORDER_TRADE_UPDATE")) {
-                OrderUpdate orderUpdate = new OrderUpdate();
-                JsonWrapper jsondata = jsonWrapper.getJsonObject("o");
-                orderUpdate.setSymbol(jsondata.getString("s"));
-                orderUpdate.setClientOrderId(jsondata.getString("c"));
-                orderUpdate.setSide(jsondata.getString("S"));
-                orderUpdate.setType(jsondata.getString("o"));
-                orderUpdate.setTimeInForce(jsondata.getString("f"));
-                orderUpdate.setOrigQty(jsondata.getBigDecimal("q"));
-                orderUpdate.setPrice(jsondata.getBigDecimal("p"));
-                orderUpdate.setAvgPrice(jsondata.getBigDecimal("ap"));
-                orderUpdate.setStopPrice(jsondata.getBigDecimal("sp"));
-                orderUpdate.setExecutionType(jsondata.getString("x"));
-                orderUpdate.setOrderStatus(jsondata.getString("X"));
-                orderUpdate.setOrderId(jsondata.getLong("i"));
-                orderUpdate.setLastFilledQty(jsondata.getBigDecimal("l"));
-                orderUpdate.setCumulativeFilledQty(jsondata.getBigDecimal("z"));
-                orderUpdate.setLastFilledPrice(jsondata.getBigDecimal("L"));
-                orderUpdate.setCommissionAsset(jsondata.getString("N"));
-                orderUpdate.setCommissionAmount(jsondata.getBigDecimal("n"));
-                orderUpdate.setOrderTradeTime(jsondata.getLong("T"));
-                orderUpdate.setTradeID(jsondata.getLong("t"));
-                orderUpdate.setBidsNotional(jsondata.getBigDecimal("b"));
-                orderUpdate.setAsksNotional(jsondata.getBigDecimal("a"));
-                orderUpdate.setIsMarkerSide(jsondata.getBoolean("m"));
-                orderUpdate.setIsReduceOnly(jsondata.getBoolean("R"));
-                orderUpdate.setWorkingType(jsondata.getString("wt"));
-                result.setOrderUpdate(orderUpdate); 
+                try {
+                    OrderUpdate orderUpdate = new OrderUpdate();
+                    JsonWrapper jsondata = jsonWrapper.getJsonObject("o");
+                    orderUpdate.setSymbol(jsondata.getString("s"));
+                    orderUpdate.setClientOrderId(jsondata.getString("c"));
+                    orderUpdate.setSide(jsondata.getString("S"));
+                    orderUpdate.setType(jsondata.getString("o"));
+                    orderUpdate.setTimeInForce(jsondata.getString("f"));
+                    orderUpdate.setOrigQty(jsondata.getBigDecimal("q"));
+                    orderUpdate.setPrice(jsondata.getBigDecimal("p"));
+                    orderUpdate.setAvgPrice(jsondata.getBigDecimal("ap"));
+                    orderUpdate.setStopPrice(jsondata.getBigDecimal("sp"));
+                    orderUpdate.setExecutionType(jsondata.getString("x"));
+                    orderUpdate.setOrderStatus(jsondata.getString("X"));
+                    orderUpdate.setOrderId(jsondata.getLong("i"));
+                    orderUpdate.setLastFilledQty(jsondata.getBigDecimal("l"));
+                    orderUpdate.setCumulativeFilledQty(jsondata.getBigDecimal("z"));
+                    orderUpdate.setLastFilledPrice(jsondata.getBigDecimal("L"));
+                    orderUpdate.setCommissionAsset(jsondata.getString("N"));
+                    orderUpdate.setCommissionAmount(jsondata.getBigDecimal("n"));
+                    orderUpdate.setOrderTradeTime(jsondata.getLong("T"));
+                    orderUpdate.setTradeID(jsondata.getLong("t"));
+                    orderUpdate.setBidsNotional(jsondata.getBigDecimal("b"));
+                    orderUpdate.setAsksNotional(jsondata.getBigDecimal("a"));
+                    orderUpdate.setIsMarkerSide(jsondata.getBoolean("m"));
+                    orderUpdate.setIsReduceOnly(jsondata.getBoolean("R"));
+                    orderUpdate.setWorkingType(jsondata.getString("wt"));
+                    result.setOrderUpdate(orderUpdate);
+                }
+                catch(BinanceApiException e) {
+                    return null;
+                }
             }
             
             return result;

@@ -14,8 +14,6 @@ import com.binance.client.impl.utils.JsonWrapper;
 
 public class WebSocketConnection extends WebSocketListener {
 
-    private static final Logger log = LoggerFactory.getLogger(WebSocketConnection.class);
-
     private static int connectionCounter = 0;
 
     public enum ConnectionState {
@@ -51,7 +49,6 @@ public class WebSocketConnection extends WebSocketListener {
         this.okhttpRequest = request.authHandler == null ? new Request.Builder().url(subscriptionUrl).build()
                 : new Request.Builder().url(subscriptionUrl).build();
         this.watchDog = watchDog;
-        log.info("[Sub] Connection [id: " + this.connectionId + "] created for " + request.name);
     }
 
     int getConnectionId() {
@@ -60,15 +57,12 @@ public class WebSocketConnection extends WebSocketListener {
 
     void connect() {
         if (state == ConnectionState.CONNECTED) {
-            log.info("[Sub][" + this.connectionId + "] Already connected");
             return;
         }
-        log.info("[Sub][" + this.connectionId + "] Connecting...");
         webSocket = RestApiInvoker.createWebSocket(okhttpRequest, this);
     }
 
     void reConnect(int delayInSecond) {
-        log.warn("[Sub][" + this.connectionId + "] Reconnecting after " + delayInSecond + " seconds later");
         if (webSocket != null) {
             webSocket.cancel();
             webSocket = null;
@@ -91,12 +85,10 @@ public class WebSocketConnection extends WebSocketListener {
 
     void send(String str) {
         boolean result = false;
-        log.debug("[Send]{}", str);
         if (webSocket != null) {
             result = webSocket.send(str);
         }
         if (!result) {
-            log.error("[Sub][" + this.connectionId + "] Failed to send message");
             closeOnError();
         }
     }
@@ -106,7 +98,6 @@ public class WebSocketConnection extends WebSocketListener {
         super.onMessage(webSocket, text);
         lastReceivedTime = System.currentTimeMillis();
 
-        log.debug("[On Message]:{}", text);
         try {
             JsonWrapper jsonWrapper = JsonWrapper.parseFromString(text);
 
@@ -117,7 +108,6 @@ public class WebSocketConnection extends WebSocketListener {
             }
 
         } catch (Exception e) {
-            log.error("[On Message][{}]: catch exception:", connectionId, e);
             closeOnError();
         }
     }
@@ -127,7 +117,6 @@ public class WebSocketConnection extends WebSocketListener {
             BinanceApiException exception = new BinanceApiException(BinanceApiException.RUNTIME_ERROR, errorMessage, e);
             request.errorHandler.onError(exception);
         }
-        log.error("[Sub][" + this.connectionId + "] " + errorMessage);
     }
 
     private void onReceiveAndClose(JsonWrapper jsonWrapper) {
@@ -157,7 +146,6 @@ public class WebSocketConnection extends WebSocketListener {
     }
 
     public void close() {
-        log.error("[Sub][" + this.connectionId + "] Closing normally");
         webSocket.cancel();
         webSocket = null;
         watchDog.onClosedNormally(this);
@@ -176,7 +164,6 @@ public class WebSocketConnection extends WebSocketListener {
     public void onOpen(WebSocket webSocket, Response response) {
         super.onOpen(webSocket, response);
         this.webSocket = webSocket;
-        log.info("[Sub][" + this.connectionId + "] Connected to server");
         watchDog.onConnectionCreated(this);
         if (request.connectionHandler != null) {
             request.connectionHandler.handle(this);
@@ -195,7 +182,6 @@ public class WebSocketConnection extends WebSocketListener {
         if (webSocket != null) {
             this.webSocket.cancel();
             state = ConnectionState.CLOSED_ON_ERROR;
-            log.error("[Sub][" + this.connectionId + "] Connection is closing due to error");
         }
     }
 }

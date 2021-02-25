@@ -660,7 +660,7 @@ class RestApiRequestImpl {
             result.setExecutedQty(jsonWrapper.getBigDecimal("executedQty"));
             result.setOrderId(jsonWrapper.getLong("orderId"));
             result.setOrigQty(jsonWrapper.getBigDecimal("origQty"));
-            result.setPrice(jsonWrapper.getBigDecimal("price"));
+            result.setPrice(jsonWrapper.getBigDecimal("avgPrice"));
             result.setReduceOnly(jsonWrapper.getBoolean("reduceOnly"));
             result.setSide(jsonWrapper.getString("side"));
             result.setStatus(jsonWrapper.getString("status"));
