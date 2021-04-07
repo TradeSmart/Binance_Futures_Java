@@ -13,6 +13,10 @@ public class SubscriptionOptions {
     private int receiveLimitMs = 60_000;
     private int connectionDelayOnFailure = 15;
 
+    public SubscriptionOptions(String uri) {
+        this.uri = uri;
+    }
+
     public SubscriptionOptions(SubscriptionOptions options) {
         this.uri = options.uri;
         this.isAutoReconnect = options.isAutoReconnect;

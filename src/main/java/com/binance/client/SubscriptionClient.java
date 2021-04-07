@@ -21,25 +21,9 @@ import com.binance.client.model.user.UserDataUpdateEvent;
  * client. if client get the update, the onReceive method will be called.
  */
 public interface SubscriptionClient {
-    /**
-     * Create the subscription client to subscribe the update from server.
-     *
-     * @return The instance of synchronous client.
-     */
-    static SubscriptionClient create() {
-        return create("", "", new SubscriptionOptions());
-    }
 
-    /**
-     * Create the subscription client to subscribe the update from server.
-     *
-     * @param apiKey    The public key applied from Binance.
-     * @param secretKey The private key applied from Binance.
-     * @return The instance of synchronous client.
-     */
-    static SubscriptionClient create(String apiKey, String secretKey) {
-        return BinanceApiInternalFactory.getInstance().createSubscriptionClient(apiKey, secretKey,
-                new SubscriptionOptions());
+    static SubscriptionClient create(String apiUrl) {
+        return create("", "", new SubscriptionOptions(apiUrl));
     }
 
     /**

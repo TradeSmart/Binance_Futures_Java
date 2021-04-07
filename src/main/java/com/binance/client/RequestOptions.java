@@ -9,20 +9,19 @@ import java.net.URL;
  */
 public class RequestOptions {
 
-    private String url = BinanceApiConstants.API_BASE_URL;
+    private String url;
 
     public RequestOptions() {
+    }
+
+    public RequestOptions(String url) {
+        this.url = url;
     }
 
     public RequestOptions(RequestOptions option) {
         this.url = option.url;
     }
 
-    /**
-     * Set the URL for request.
-     *
-     * @param url The URL name like "https://fapi.binance.com".
-     */
     public void setUrl(String url) {
         try {
             URL u = new URL(url);

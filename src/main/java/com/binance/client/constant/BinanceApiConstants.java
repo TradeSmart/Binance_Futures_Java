@@ -7,15 +7,17 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  */
 public class BinanceApiConstants {
 
-    /**
-     * REST API base URL.
-     */
-    public static final String API_BASE_URL = "https://fapi.binance.com";
+    public static final String FAPI_BASE_URL = "https://fapi.binance.com/fapi/v1";
 
-    /**
-     * Streaming API base URL.
-     */
-    public static final String WS_API_BASE_URL = "wss://fstream.binance.com/ws";
+    public static final String DAPI_BASE_URL = "https://dapi.binance.com/dapi/v1";
+
+    public static final String TESTNET_DAPI_BASE_URL = "https://testnet.binancefuture.com/dapi/v1";
+
+    public static final String WS_FAPI_BASE_URL = "wss://fstream.binance.com/ws";
+
+    public static final String WS_DAPI_BASE_URL = "wss://dstream.binance.com/ws";
+
+    public static final String TESTNET_WS_DAPI_BASE_URL = "wss://dstream.binancefuture.com/ws";
 
     /**
      * HTTP Header to be used for API-KEY authentication.
