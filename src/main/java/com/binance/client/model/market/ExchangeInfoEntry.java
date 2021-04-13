@@ -18,6 +18,8 @@ public class ExchangeInfoEntry {
 
     private BigDecimal requiredMarginPercent;
 
+    private BigDecimal contractSize;
+
     private String baseAsset;
 
     private String quoteAsset;
@@ -66,6 +68,14 @@ public class ExchangeInfoEntry {
 
     public void setRequiredMarginPercent(BigDecimal requiredMarginPercent) {
         this.requiredMarginPercent = requiredMarginPercent;
+    }
+
+    public BigDecimal getContractSize() {
+        return contractSize;
+    }
+
+    public void setContractSize(BigDecimal contractSize) {
+        this.contractSize = contractSize;
     }
 
     public String getBaseAsset() {

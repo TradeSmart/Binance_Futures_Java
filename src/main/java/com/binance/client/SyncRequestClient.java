@@ -33,26 +33,8 @@ import java.util.List;
  */
 public interface SyncRequestClient {
 
-    /**
-     * Create the synchronous client. All interfaces defined in synchronous client
-     * are implemented by synchronous mode.
-     *
-     * @return The instance of synchronous client.
-     */
-    static SyncRequestClient create() {
-        return create("", "", new RequestOptions());
-    }
-
-    /**
-     * Create the synchronous client. All interfaces defined in synchronous client
-     * are implemented by synchronous mode.
-     *
-     * @param apiKey    The public key applied from binance.
-     * @param secretKey The private key applied from binance.
-     * @return The instance of synchronous client.
-     */
-    static SyncRequestClient create(String apiKey, String secretKey) {
-        return BinanceApiInternalFactory.getInstance().createSyncRequestClient(apiKey, secretKey, new RequestOptions());
+    static SyncRequestClient create(String apiUrl) {
+        return create("", "", new RequestOptions(apiUrl));
     }
 
     /**
