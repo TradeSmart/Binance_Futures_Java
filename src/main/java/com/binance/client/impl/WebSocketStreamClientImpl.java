@@ -60,8 +60,13 @@ public class WebSocketStreamClientImpl implements SubscriptionClient {
     @Override
     public void unsubscribeAll() {
         for (WebSocketConnection connection : connections) {
-            watchDog.onClosedNormally(connection);
-            connection.close();
+            try {
+                watchDog.onClosedNormally(connection);
+                connection.close();
+            }
+            catch (Exception e) {
+
+            }
         }
         connections.clear();
     }
